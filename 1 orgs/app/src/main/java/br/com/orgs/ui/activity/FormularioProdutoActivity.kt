@@ -16,33 +16,44 @@ class FormularioProdutoActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        configurarBotaoSalvar()
+    }
+
+    private fun configurarBotaoSalvar() {
         val salvar = findViewById<Button>(R.id.btSalvar)
+        val dao = ProdutoDAO()
         salvar.setOnClickListener {
-            val campoNome = findViewById<TextView>(R.id.etNome)
-            val campoDescricao = findViewById<TextView>(R.id.etDescricao)
-            val campoValor = findViewById<TextView>(R.id.etValor)
+            val produto = criarProduto()
 
-            val nome = campoNome.text.toString()
-            val descricao = campoDescricao.text.toString()
-            val valorRecebido = campoValor.text.toString()
+            dao.adicionar(produto)
+            finish()
+        }
+    }
 
-            Log.i("Clique_btn_salvar",
-                "nome: $nome \r\n descrição: $descricao \r\n valor: $valorRecebido")
+    private fun criarProduto(): Produto {
+        val campoNome = findViewById<TextView>(R.id.etNome)
+        val campoDescricao = findViewById<TextView>(R.id.etDescricao)
+        val campoValor = findViewById<TextView>(R.id.etValor)
 
-            val valor = if(valorRecebido.isBlank() || valorRecebido.isEmpty()){
-                BigDecimal.ZERO
-            }else{
-                BigDecimal(valorRecebido)
-            }
+        val nome = campoNome.text.toString()
+        val descricao = campoDescricao.text.toString()
+        val valorRecebido = campoValor.text.toString()
 
-            val produto = Produto(
-                nome,
-                descricao,
-                valor
-            )
+        Log.i(
+            "Clique_btn_salvar",
+            "nome: $nome \r\n descrição: $descricao \r\n valor: $valorRecebido"
+        )
 
-            ProdutoDAO().adicionar(produto)
+        val valor = if (valorRecebido.isBlank() || valorRecebido.isEmpty()) {
+            BigDecimal.ZERO
+        } else {
+            BigDecimal(valorRecebido)
         }
 
+        return Produto(
+            nome,
+            descricao,
+            valor
+        )
     }
 }

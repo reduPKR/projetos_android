@@ -1,5 +1,6 @@
 package br.com.orgs.ui.recyclerview.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,9 @@ import br.com.orgs.models.Produto
 
 class ListaProdutosAdapter(
     private val context: Context,
-    private val produtos: List<Produto>
+    produtos: List<Produto>
 ) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
+    private val produtos = produtos.toMutableList()
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         fun vincular(produto: Produto) {
@@ -39,5 +41,12 @@ class ListaProdutosAdapter(
     }
 
     override fun getItemCount(): Int = produtos.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun atualizar(produtos: List<Produto>) {
+        this.produtos.clear()
+        this.produtos.addAll(produtos)
+        notifyDataSetChanged()
+    }
 
 }
