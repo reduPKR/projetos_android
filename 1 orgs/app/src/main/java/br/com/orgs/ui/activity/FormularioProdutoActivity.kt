@@ -2,13 +2,11 @@ package br.com.orgs.ui.activity
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import br.com.orgs.R
 import br.com.orgs.dao.ProdutoDAO
 import br.com.orgs.databinding.ActivityFormularioProdutoBinding
-import br.com.orgs.databinding.ActivityListaProdutoBinding
 import br.com.orgs.models.Produto
 import java.math.BigDecimal
 
@@ -22,6 +20,18 @@ class FormularioProdutoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         configurarBotaoSalvar()
+
+        binding.activityFormularioProdutoImagem.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setView(R.layout.formulario_imagem)
+                .setPositiveButton("Confirmar") { _, _ ->
+
+                }
+                .setNegativeButton("Cancelar") { _, _ ->
+
+                }
+                .show()
+        }
     }
 
     private fun configurarBotaoSalvar() {
