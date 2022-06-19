@@ -8,31 +8,53 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.orgs.R
+import br.com.orgs.databinding.ProdutoItemBinding
 import br.com.orgs.models.Produto
+import java.text.NumberFormat
+import java.util.*
 
 class ListaProdutosAdapter(
     private val context: Context,
     produtos: List<Produto>
 ) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
+
     private val produtos = produtos.toMutableList()
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+//    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+//        fun vincular(produto: Produto) {
+//            val nome = itemView.findViewById<TextView>(R.id.tvNome)
+//            nome.text = produto.nome
+//
+//            val descricao = itemView.findViewById<TextView>(R.id.tvDescricao)
+//            descricao.text = produto.descricao
+//
+//            val valor = itemView.findViewById<TextView>(R.id.tvValor)
+//            valor.text = produto.valor.toPlainString()
+//        }
+//    }
+
+    class ViewHolder(private val bindind: ProdutoItemBinding): RecyclerView.ViewHolder(bindind.root) {
         fun vincular(produto: Produto) {
-            val nome = itemView.findViewById<TextView>(R.id.tvNome)
+            //val nome = itemView.findViewById<TextView>(R.id.tvNome)
+            val nome = bindind.tvNome
             nome.text = produto.nome
 
-            val descricao = itemView.findViewById<TextView>(R.id.tvDescricao)
+            val descricao = bindind.tvDescricao
             descricao.text = produto.descricao
 
-            val valor = itemView.findViewById<TextView>(R.id.tvValor)
-            valor.text = produto.valor.toPlainString()
+            val valor = bindind.tvValor
+            val currencyInstance = NumberFormat.getCurrencyInstance(Locale("pt", "br"))
+            val moeda = currencyInstance.format(produto.valor)
+            valor.text = moeda
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.produto_item, parent, false)
-        return ViewHolder(view)
+//        val view = inflater.inflate(R.layout.produto_item, parent, false)
+//        return ViewHolder(view)
+        val bindind = ProdutoItemBinding.inflate(inflater, parent, false)
+        return ViewHolder(bindind)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

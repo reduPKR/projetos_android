@@ -60,13 +60,22 @@
             android:textStyle="bold"
             tools:text="19.99" />
 
+<!--        Antigo mais utilizado em legados-->
+<!--        <androidx.constraintlayout.widget.Guideline-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            app:layout_constraintGuide_percent="0.3"-->
+<!--            android:id="@+id/guideline"/>-->
+
         <ImageView
             android:id="@+id/formulario_produto_imageView"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:scaleType="centerCrop"
             android:layout_height="0dp"
             android:src="@drawable/produto_1"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.3"
             app:layout_constraintEnd_toStartOf="@+id/tvNome"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
