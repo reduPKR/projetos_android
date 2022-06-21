@@ -9,7 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.orgs.R
 import br.com.orgs.databinding.ProdutoItemBinding
+import br.com.orgs.extensions.tentaCarregarImagem
 import br.com.orgs.models.Produto
+import coil.load
 import java.text.NumberFormat
 import java.util.*
 
@@ -33,19 +35,30 @@ class ListaProdutosAdapter(
 //        }
 //    }
 
-    class ViewHolder(private val bindind: ProdutoItemBinding): RecyclerView.ViewHolder(bindind.root) {
+    class ViewHolder(private val binding: ProdutoItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun vincular(produto: Produto) {
             //val nome = itemView.findViewById<TextView>(R.id.tvNome)
-            val nome = bindind.tvNome
+            val nome = binding.tvNome
             nome.text = produto.nome
 
-            val descricao = bindind.tvDescricao
+            val descricao = binding.tvDescricao
             descricao.text = produto.descricao
 
-            val valor = bindind.tvValor
+            val valor = binding.tvValor
             val currencyInstance = NumberFormat.getCurrencyInstance(Locale("pt", "br"))
             val moeda = currencyInstance.format(produto.valor)
             valor.text = moeda
+
+            val visibilidade = if(produto.imagem != null){
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+
+            binding.formularioProdutoImageView.visibility = visibilidade
+
+            //binding.formularioProdutoImageView.load(produto.imagem)
+             
         }
     }
 
