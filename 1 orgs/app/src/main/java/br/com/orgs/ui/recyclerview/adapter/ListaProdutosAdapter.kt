@@ -58,7 +58,7 @@ class ListaProdutosAdapter(
             binding.formularioProdutoImageView.visibility = visibilidade
 
             //binding.formularioProdutoImageView.load(produto.imagem)
-             
+            binding.formularioProdutoImageView.tentaCarregarImagem(produto.imagem)
         }
     }
 

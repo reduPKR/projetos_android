@@ -2,12 +2,14 @@ package br.com.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.orgs.R
 import br.com.orgs.dao.ProdutoDAO
 import br.com.orgs.databinding.ActivityListaProdutoBinding
+import br.com.orgs.ui.dialog.FormularioImagemDialog
 import br.com.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
 
 
@@ -24,18 +26,9 @@ class ListaProdutoActivity : AppCompatActivity(R.layout.activity_lista_produto) 
         setContentView(binding.root)
         configurarRecycleView()
         configurarFAB()
-
-//        AlertDialog.Builder(this)
-//            .setMessage("mensagem de teste")
-//            .setTitle("titulo de teste")
-//            .setView(binding.fabAdicionar)
-//            .setPositiveButton("Confirmar") { _, _ ->
-//
-//            }
-//            .setNegativeButton("Cancelar") { _, _ ->
-//
-//            }
-//            .show()
+//        FormularioImagemDialog(this).exibir() { imagem ->
+//            Log.i("ListaProdutosActivity", "onCreate: $imagem")
+//        }
     }
 
     override fun onResume() {
