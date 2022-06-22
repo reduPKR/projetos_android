@@ -1,7 +1,10 @@
 package br.com.orgs.ui.activity
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import br.com.orgs.R
 import br.com.orgs.databinding.ActivityDetalhesProdutoBinding
@@ -42,4 +45,15 @@ class DetalhesProdutoActivity : AppCompatActivity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.menu_detalhes_produto_remover -> {
+                Log.i(TAG, "onOptionsItemSelected: remover")
+            }
+            R.id.menu_detalhes_produto_editar -> {
+                Log.i(TAG, "onOptionsItemSelected: editar")
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }
