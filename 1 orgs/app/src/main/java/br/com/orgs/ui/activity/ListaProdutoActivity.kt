@@ -5,21 +5,20 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.orgs.R
-import br.com.orgs.dao.ProdutoDAO
 import br.com.orgs.database.AppDatabase
 import br.com.orgs.databinding.ActivityListaProdutoBinding
 import br.com.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
 
 
 class ListaProdutoActivity : AppCompatActivity(R.layout.activity_lista_produto) {
-    private val dao = ProdutoDAO()
-    private val adapter = ListaProdutosAdapter(context = this, produtos = dao.buscarTodos())
+    private val adapter = ListaProdutosAdapter(context = this)
     private val binding by lazy {
         ActivityListaProdutoBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        title = "Lista de produtos"
         setContentView(binding.root)
         configurarRecycleView()
         configurarFAB()
@@ -45,10 +44,18 @@ class ListaProdutoActivity : AppCompatActivity(R.layout.activity_lista_produto) 
     }
 
     private fun configurarRecycleView() {
-        //No fim do id bom é activity_lista_nomeID
-        //val recycler = findViewById<RecyclerView>(R.id.rvLista)
         val recycler = binding.rvLista
         recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(this)
+
+        adapter.quandoClicaNoItem = {
+            val intent = Intent(
+                this,
+                DetalhesProdutoActivity::class.java
+            ).apply {
+                putExtra(CHAVE_PRODUTO, it)
+            }
+            startActivity(intent)
+        }
     }
 }

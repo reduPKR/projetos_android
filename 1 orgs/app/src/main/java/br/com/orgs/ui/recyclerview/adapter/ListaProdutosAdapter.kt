@@ -17,27 +17,26 @@ import java.util.*
 
 class ListaProdutosAdapter(
     private val context: Context,
-    produtos: List<Produto>
+    produtos: List<Produto> = emptyList(),
+    var quandoClicaNoItem: (produto: Produto) -> Unit = {}
 ) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
 
     private val produtos = produtos.toMutableList()
 
-//    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-//        fun vincular(produto: Produto) {
-//            val nome = itemView.findViewById<TextView>(R.id.tvNome)
-//            nome.text = produto.nome
-//
-//            val descricao = itemView.findViewById<TextView>(R.id.tvDescricao)
-//            descricao.text = produto.descricao
-//
-//            val valor = itemView.findViewById<TextView>(R.id.tvValor)
-//            valor.text = produto.valor.toPlainString()
-//        }
-//    }
+    inner class ViewHolder(private val binding: ProdutoItemBinding): RecyclerView.ViewHolder(binding.root) {
+        private lateinit var produto: Produto
 
-    class ViewHolder(private val binding: ProdutoItemBinding): RecyclerView.ViewHolder(binding.root) {
+        init {
+            itemView.setOnClickListener {
+                if (::produto.isInitialized) {
+                    quandoClicaNoItem(produto)
+                }
+            }
+        }
+
         fun vincular(produto: Produto) {
-            //val nome = itemView.findViewById<TextView>(R.id.tvNome)
+            this.produto = produto
+
             val nome = binding.tvNome
             nome.text = produto.nome
 
@@ -57,15 +56,12 @@ class ListaProdutosAdapter(
 
             binding.formularioProdutoImageView.visibility = visibilidade
 
-            //binding.formularioProdutoImageView.load(produto.imagem)
             binding.formularioProdutoImageView.tentaCarregarImagem(produto.imagem)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(context)
-//        val view = inflater.inflate(R.layout.produto_item, parent, false)
-//        return ViewHolder(view)
         val bindind = ProdutoItemBinding.inflate(inflater, parent, false)
         return ViewHolder(bindind)
     }

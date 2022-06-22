@@ -3,7 +3,6 @@ package br.com.orgs.ui.activity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import br.com.orgs.dao.ProdutoDAO
 import br.com.orgs.database.AppDatabase
 import br.com.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.orgs.extensions.tentaCarregarImagem
