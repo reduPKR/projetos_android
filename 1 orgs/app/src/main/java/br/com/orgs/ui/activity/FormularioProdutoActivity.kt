@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import br.com.orgs.dao.ProdutoDAO
+import br.com.orgs.database.AppDatabase
 import br.com.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.orgs.extensions.tentaCarregarImagem
 import br.com.orgs.models.Produto
@@ -24,7 +25,6 @@ class FormularioProdutoActivity : AppCompatActivity() {
         configurarBotaoSalvar()
 
         binding.activityFormularioProdutoImagem.setOnClickListener {
-           //FormularioImagemDialog(this).exibir()
             FormularioImagemDialog(this)
                 .exibir(url) { imagem ->
                     url = imagem
@@ -34,13 +34,14 @@ class FormularioProdutoActivity : AppCompatActivity() {
     }
 
     private fun configurarBotaoSalvar() {
-        //val salvar = findViewById<Button>(R.id.btSalvar)
         val salvar = binding.btSalvar
-        val dao = ProdutoDAO()
+
+        val db = AppDatabase.instancia(this)
+        val produtoDao = db.produtoDao()
         salvar.setOnClickListener {
             val produto = criarProduto()
 
-            dao.adicionar(produto)
+            produtoDao.salvar(produto)
             finish()
         }
     }
@@ -66,6 +67,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
         }
 
         return Produto(
+            0,
             nome,
             descricao,
             valor,

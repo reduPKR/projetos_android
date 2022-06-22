@@ -2,14 +2,12 @@ package br.com.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.orgs.R
 import br.com.orgs.dao.ProdutoDAO
+import br.com.orgs.database.AppDatabase
 import br.com.orgs.databinding.ActivityListaProdutoBinding
-import br.com.orgs.ui.dialog.FormularioImagemDialog
 import br.com.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
 
 
@@ -22,22 +20,19 @@ class ListaProdutoActivity : AppCompatActivity(R.layout.activity_lista_produto) 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_lista_produto)
         setContentView(binding.root)
         configurarRecycleView()
         configurarFAB()
-//        FormularioImagemDialog(this).exibir() { imagem ->
-//            Log.i("ListaProdutosActivity", "onCreate: $imagem")
-//        }
     }
 
     override fun onResume() {
         super.onResume()
-        adapter.atualizar(dao.buscarTodos())
+        val db = AppDatabase.instancia(this)
+        val produtoDao = db.produtoDao()
+        adapter.atualizar(produtoDao.getAll())
     }
 
     private fun configurarFAB() {
-       // val fab = findViewById<FloatingActionButton>(R.id.fabAdicionar)
         val fab = binding.fabAdicionar
         fab.setOnClickListener {
             abrirFormularioProduto()
