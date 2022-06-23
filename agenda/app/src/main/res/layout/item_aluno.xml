@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/item_aluno_nome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Rafael"/>
+
+        <TextView
+            android:id="@+id/item_aluno_telefone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/item_aluno_nome"
+            app:layout_constraintStart_toStartOf="@id/item_aluno_nome"
+            app:layout_constraintTop_toBottomOf="@id/item_aluno_nome"
+            android:text="(18) 123456789"/>
+
+        <TextView
+            android:id="@+id/item_aluno_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/item_aluno_nome"
+            app:layout_constraintStart_toStartOf="@id/item_aluno_nome"
+            app:layout_constraintTop_toBottomOf="@id/item_aluno_telefone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp"
+            android:layout_margin="8dp"
+            android:textStyle="bold"
+            android:text="redu@gmail.com"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
