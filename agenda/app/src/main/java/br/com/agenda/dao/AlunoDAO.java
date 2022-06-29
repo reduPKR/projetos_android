@@ -41,4 +41,21 @@ public class AlunoDAO {
         }
 
     }
+
+    public void remove(Aluno aluno) {
+        Aluno atual = null;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            atual = lista
+                    .stream()
+                    .filter(item -> item.getId() == aluno.getId())
+                    .collect(Collectors.toList())
+                    .get(0);
+        }
+
+        if (atual != null){
+            int pos = lista.indexOf(atual);
+            lista.remove(pos);
+        }
+    }
 }
