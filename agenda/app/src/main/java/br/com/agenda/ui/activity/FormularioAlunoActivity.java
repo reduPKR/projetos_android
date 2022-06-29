@@ -1,6 +1,10 @@
 package br.com.agenda.ui.activity;
 
+import static br.com.agenda.ui.activity.Contantes.CHAVE_ALUNO;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,17 +18,22 @@ import br.com.agenda.model.Aluno;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
 
-    public static final String TITULO_APPBAR = "Novo aluno";
+    private static final String TITULO_NOVO_ALUNO = "Novo aluno";
+    private static final String TITULO_EDITAR_ALUNO = "Editar aluno";
+
     private EditText campoNome;
     private EditText campoTelefone;
     private EditText campoEmail;
     private final AlunoDAO dao = new AlunoDAO();
+    private Aluno aluno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_aluno);
-        setTitle(TITULO_APPBAR);
+        //setTitle(TITULO_APPBAR);
+
         inicializacaoDosCampos();
         configuraBotaoSalvar();
     }
@@ -34,8 +43,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Aluno alunoCriado = criaAluno();
-                salva(alunoCriado);
+                preencherAluno();
+                finalizar();
             }
         });
     }
@@ -44,19 +53,47 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         campoNome = findViewById(R.id.activity_formulario_aluno_nome);
         campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
         campoEmail = findViewById(R.id.activity_formulario_aluno_email);
+
+        preencherCamposInicializados();
     }
 
-    private void salva(Aluno aluno) {
-        dao.salva(aluno);
-        finish();
+    private void preencherCamposInicializados() {
+        Intent dados = getIntent();
+        if(dados.hasExtra(CHAVE_ALUNO)){
+            setTitle(TITULO_EDITAR_ALUNO);
+            aluno = (Aluno) dados.getSerializableExtra(CHAVE_ALUNO);
+            Log.i("aluno",
+                    aluno.getNome()+" "+
+                         aluno.getEmail()+" "+
+                         aluno.getTelefone()
+                    );
+            campoNome.setText(aluno.getNome());
+            campoTelefone.setText(aluno.getTelefone());
+            campoEmail.setText(aluno.getEmail());
+        }else {
+            setTitle(TITULO_NOVO_ALUNO);
+            aluno = new Aluno();
+        }
     }
 
     @NonNull
-    private Aluno criaAluno() {
+    private void preencherAluno() {
         String nome = campoNome.getText().toString();
         String telefone = campoTelefone.getText().toString();
         String email = campoEmail.getText().toString();
 
-        return new Aluno(nome, telefone, email);
+        aluno.setNome(nome);
+        aluno.setTelefone(telefone);
+        aluno.setEmail(email);
+    }
+
+    private void finalizar() {
+        if(aluno.isNovoAluno()){
+            dao.salva(aluno);
+        }else{
+            dao.editar(aluno);
+        }
+
+        finish();
     }
 }
